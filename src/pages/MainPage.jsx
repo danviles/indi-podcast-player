@@ -1,8 +1,19 @@
+import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import PodcastCardItem from "../components/cards/PodcastCardItem";
 import { Button } from "@mui/material";
+import { useGetPodcasts } from "../hooks/usePodcast";
 
 const MainPage = () => {
+  const [search, setSearch] = useState("");
+  const getPodcastsQuery = useGetPodcasts();
+
+  const filteredPodcasts = getPodcastsQuery?.data?.filter((podcast) => {
+    const name = podcast['im:name'].label.toLowerCase();
+    const artist = podcast['im:artist'].label.toLowerCase();
+    return name.includes(search.toLowerCase()) || artist.includes(search.toLowerCase());
+  }) || [];
+
   return (
     <section className="flex flex-col items-center justify-cente">
       {/* Filter podcasts */}
@@ -11,26 +22,23 @@ const MainPage = () => {
           100
         </h1>
         <TextField
-          id="outlined-basic"
           label="Filter podcasts..."
           variant="outlined"
           size="small"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       {/* List of podcasts  */}
       <div className="flex flex-col w-full h-full">
         <div className="flex justify-between flex-wrap gap-4 pt-12">
-          <PodcastCardItem imgsrc="https://picsum.photos/200" title="Podcast tittle" author="Elvis Nogueiras" />
-          <PodcastCardItem imgsrc="https://picsum.photos/200" title="Podcast tittle" author="Elvis Nogueiras" />
-          <PodcastCardItem imgsrc="https://picsum.photos/200" title="Podcast tittle" author="Elvis Nogueiras" />
-          <PodcastCardItem imgsrc="https://picsum.photos/200" title="Podcast tittle" author="Elvis Nogueiras" />
-          <PodcastCardItem imgsrc="https://picsum.photos/200" title="Podcast tittle" author="Elvis Nogueiras" />
-          <PodcastCardItem imgsrc="https://picsum.photos/200" title="Podcast tittle" author="Elvis Nogueiras" />
+          {filteredPodcasts.map((podcast) => (
+            <PodcastCardItem
+              key={podcast.id.attributes["im:id"]}
+              podcast={podcast}
+            />
+          ))}
         </div>
-      </div>
-      {/* Pagination */}
-      <div className="flex justify-center w-full h-12">
-        <Button disabled={true}>Load more</Button>
       </div>
     </section>
   );
