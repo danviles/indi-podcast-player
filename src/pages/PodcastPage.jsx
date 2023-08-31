@@ -47,13 +47,13 @@ const PodcastPage = () => {
   }
 
   return (
-    <div className="flex flex-col  ">
+    <section className="flex flex-col ">
       {/* Episodes count */}
-      <div className="shadow-lg border rounded-sm mb-5 p-2">
+      <div className="shadow-lg border rounded-sm mb-5 p-2 bg-white">
         <h1 className="text-xl font-bold capitalize">Episodes: {"66"}</h1>
       </div>
       {/* Episodes table */}
-      <div className="shadow-lg border rounded-sm p-2">
+      <div className="shadow-lg border rounded-sm p-2 bg-white">
         <TableContainer >
           <Table stickyHeader >
             <TableHead>
@@ -83,7 +83,7 @@ const PodcastPage = () => {
           </Table>
         </TableContainer>
       </div>
-    </div>
+    </section>
   );
 };
 
