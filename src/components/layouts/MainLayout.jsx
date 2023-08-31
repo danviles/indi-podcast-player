@@ -1,10 +1,17 @@
-import { Outlet } from "react-router-dom"
-
+import { Outlet } from "react-router-dom";
+import HeaderBar from "../header/HeaderBar";
 
 const MainLayout = () => {
   return (
-    <div><Outlet /></div>
-  )
-}
+    <>
+      <header>
+        <HeaderBar />
+      </header>
+      <main className="m-4">
+        <Outlet />
+      </main>
+    </>
+  );
+};
 
-export default MainLayout
+export default MainLayout;
