@@ -2,17 +2,28 @@ import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import PodcastCardItem from "../components/cards/PodcastCardItem";
 import { Button } from "@mui/material";
-import { useGetPodcasts } from "../hooks/usePodcast";
+import { useGetPodcasts, usePodcastContext } from "../hooks/usePodcast";
 
 const MainPage = () => {
   const [search, setSearch] = useState("");
+
+  const { setActPodcast } = usePodcastContext();
+
   const getPodcastsQuery = useGetPodcasts();
 
-  const filteredPodcasts = getPodcastsQuery?.data?.filter((podcast) => {
-    const name = podcast['im:name'].label.toLowerCase();
-    const artist = podcast['im:artist'].label.toLowerCase();
-    return name.includes(search.toLowerCase()) || artist.includes(search.toLowerCase());
-  }) || [];
+  const filteredPodcasts =
+    getPodcastsQuery?.data?.filter((podcast) => {
+      const name = podcast["im:name"].label.toLowerCase();
+      const artist = podcast["im:artist"].label.toLowerCase();
+      return (
+        name.includes(search.toLowerCase()) ||
+        artist.includes(search.toLowerCase())
+      );
+    }) || [];
+
+  const handleSelectPodcast = (podcast) => {
+    setActPodcast(podcast);
+  };
 
   return (
     <section className="flex flex-col items-center justify-cente">
@@ -31,12 +42,13 @@ const MainPage = () => {
       </div>
       {/* List of podcasts  */}
       <div className="flex flex-col w-full h-full">
-        <div className="flex justify-between flex-wrap gap-4 pt-12">
+        <div className="flex justify-around flex-wrap gap-4 pt-12">
           {filteredPodcasts.map((podcast) => (
-            <PodcastCardItem
-              key={podcast.id.attributes["im:id"]}
-              podcast={podcast}
-            />
+            <div key={podcast.id.attributes["im:id"]} onClick={() => handleSelectPodcast(podcast)}>
+              <PodcastCardItem
+                podcast={podcast}
+              />
+            </div>
           ))}
         </div>
       </div>
