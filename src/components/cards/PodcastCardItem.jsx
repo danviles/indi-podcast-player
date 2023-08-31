@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const PodcastCardItem = ({imgsrc = 'https://picsum.photos/200', title, author}) => {
+
+  const navigate = useNavigate();
+
   return (
-    <div className="relative w-52 h-32 shadow-xl rounded-sm p-2 flex flex-col items-center justify-end pt-12 mb-12 bg-white hover:bg-slate-200 transition cursor-pointer" title={`${title}\n${author}`}>
+    <div 
+      className="relative w-52 h-32 shadow-xl rounded-sm p-2 flex flex-col items-center justify-end pt-12 mb-12 bg-white hover:bg-slate-200 transition cursor-pointer" title={`${title}\n${author}`}
+      onClick={() => navigate(`/podcast/${'id123456'}`)}
+    >
       <img
         className="absolute top-0 transform -translate-y-1/2 rounded-full h-24"
         src={imgsrc}

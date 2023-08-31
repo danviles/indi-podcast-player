@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import HeaderBar from "../header/HeaderBar";
+import HeaderBar from "../headers/HeaderBar";
 
 const MainLayout = () => {
   return (
