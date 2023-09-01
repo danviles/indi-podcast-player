@@ -6,17 +6,14 @@ const PodcastContext = createContext();
 const PodcastProvider = ({children}) => {
 
   const [actPodcast, setActPodcast] = useState(null)
-  const [episodes, setEpisodes] = useState(null)
   const [actEpisode, setActEpisode] = useState(null)
 
   return (
     <PodcastContext.Provider
     value={{
       actPodcast,
-      episodes,
       actEpisode,
       setActPodcast,
-      setEpisodes,
       setActEpisode
     }}
     >

@@ -6,28 +6,35 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useGetEpisodes, usePodcastContext } from "../hooks/usePodcast";
-import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton, Typography } from "@mui/material";
 
 const PodcastPage = () => {
-  const { actPodcast } = usePodcastContext();
-  const podcastID = actPodcast?.id.attributes["im:id"];
+  
+  
   const navigate = useNavigate();
+  const { actPodcast, setActEpisode } = usePodcastContext();
+  const podcastID = actPodcast?.id.attributes["im:id"];
 
   const queryClient = useQueryClient();
   const thisQuery = queryClient.getQueryState(["episodes", podcastID]);
-
   const getEpisodesQuery = useGetEpisodes(podcastID);
 
+  const sortedEpisodesByDate = getEpisodesQuery?.data?.sort((a, b) => {
+    const dateA = new Date(a.pubDate);
+    const dateB = new Date(b.pubDate);
+    return dateB - dateA;
+  }) || [];
+  
   const handleSetEpisode = (episode) => {
-    navigate(`./episode/${"episodeid"}`);
+    setActEpisode(episode)
+    navigate(`./episode/${podcastID}`);
   };
 
   return (
     <section className="flex flex-col">
       {thisQuery.status === "loading" ? (
-        <Typography component="div" variant="h3" className="flex flex-col">
+        <Typography component="div" variant="h2" className="flex flex-col">
           <Skeleton />
           <Typography variant="h4" className="flex flex-col">
             <Skeleton />
@@ -54,7 +61,7 @@ const PodcastPage = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {getEpisodesQuery?.data?.map((episode, index) => (
+                  {sortedEpisodesByDate?.map((episode, index) => (
                     <TableRow
                       key={episode.guid}
                       className={`cursor-pointer hover:bg-gray-300 ${

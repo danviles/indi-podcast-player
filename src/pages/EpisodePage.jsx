@@ -1,7 +1,10 @@
 import DOMPurify from "dompurify";
+import { usePodcastContext } from "../hooks/usePodcast";
 
 const EpisodePage = () => {
-  const rawHtml = "<b>Prueba de texto en negritas.</b> \n <img src='https://picsum.photos/200' /> \n Lorem ipsun bla bla bla...";
+  const { actEpisode } = usePodcastContext();
+
+  const rawHtml = actEpisode.content;
   const cleanHtml = DOMPurify.sanitize(rawHtml);
 
   return (
@@ -9,13 +12,16 @@ const EpisodePage = () => {
       {/* Episode name */}
       <h1 className="capitalize text-xl font-bold mb-2">Episode title</h1>
       {/* Description  */}
-      <div className="italic" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
+      <div className="italic desc-links" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
       {/* Audio player  */}
-      <div>
-        <audio className="w-full mt-10 rounded-md h-7" src="" controls></audio>
-      </div>
+      <audio
+        className="w-full mt-10 rounded-md h-7"
+        src={actEpisode.enclosure.url}
+        controls
+        autoPlay
+      />
     </section>
-  )
-}
+  );
+};
 
-export default EpisodePage
+export default EpisodePage;
