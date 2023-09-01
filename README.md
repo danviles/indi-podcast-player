@@ -42,7 +42,7 @@ Ejecuta `npm run test` para iniciar las pruebas E2E con Cypress.
 
 Puedes encontrar una versión en vivo de la aplicación [aquí](https://bejewelled-elf-efb60a.netlify.app/).
 
-## Proyectos similar
+## Proyectos similares
 
 - [Reproductor podcast personalizado - TypeScript](https://github.com/danviles/podcast-player)
 
