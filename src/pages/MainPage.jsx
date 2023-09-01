@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextField from "@mui/material/TextField";
 import PodcastCardItem from "../components/cards/PodcastCardItem";
-import { Button } from "@mui/material";
 import { useGetPodcasts, usePodcastContext } from "../hooks/usePodcast";
+import autoAnimate from '@formkit/auto-animate'
 
 const MainPage = () => {
   const [search, setSearch] = useState("");
@@ -10,6 +10,12 @@ const MainPage = () => {
   const { setActPodcast } = usePodcastContext();
 
   const getPodcastsQuery = useGetPodcasts();
+
+  const parent = useRef(null)
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current)
+  }, [parent])
 
   const filteredPodcasts =
     getPodcastsQuery?.data?.filter((podcast) => {
@@ -42,7 +48,7 @@ const MainPage = () => {
       </div>
       {/* List of podcasts  */}
       <div className="flex flex-col w-full h-full">
-        <div className="flex justify-around flex-wrap gap-4 pt-12">
+        <div className="flex justify-around flex-wrap gap-4 pt-12" ref={parent}>
           {filteredPodcasts.map((podcast) => (
             <div key={podcast.id.attributes["im:id"]} onClick={() => handleSelectPodcast(podcast)}>
               <PodcastCardItem

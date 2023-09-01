@@ -8,9 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import { useGetEpisodes, usePodcastContext } from "../hooks/usePodcast";
 import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton, Typography } from "@mui/material";
+import { formatDate, formatTime } from "../helpers/formatDates";
 
 const PodcastPage = () => {
-  
   
   const navigate = useNavigate();
   const { actPodcast, setActEpisode } = usePodcastContext();
@@ -28,7 +28,7 @@ const PodcastPage = () => {
   
   const handleSetEpisode = (episode) => {
     setActEpisode(episode)
-    navigate(`./episode/${podcastID}`);
+    navigate(`./episode/${episode.guid}`);
   };
 
   return (
@@ -72,9 +72,9 @@ const PodcastPage = () => {
                       <TableCell component="th" scope="row" className="">
                         {episode.title}
                       </TableCell>
-                      <TableCell align="right">{episode.pubDate}</TableCell>
+                      <TableCell align="right">{formatDate(episode.pubDate)}</TableCell>
                       <TableCell align="right">
-                        {episode.itunes.duration}
+                        {formatTime(episode.itunes.duration)}
                       </TableCell>
                     </TableRow>
                   ))}

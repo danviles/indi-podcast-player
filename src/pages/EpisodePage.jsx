@@ -1,11 +1,16 @@
 import DOMPurify from "dompurify";
 import { usePodcastContext } from "../hooks/usePodcast";
+import { Navigate } from "react-router-dom";
 
 const EpisodePage = () => {
   const { actEpisode } = usePodcastContext();
 
   const rawHtml = actEpisode.content;
   const cleanHtml = DOMPurify.sanitize(rawHtml);
+
+  if ( !actEpisode ) {
+    <Navigate to="/" />
+  }
 
   return (
     <section className="flex flex-col shadow-lg border rounded-sm p-5 bg-white">

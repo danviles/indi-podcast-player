@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useIsFetching } from "@tanstack/react-query";
 import pulseIndicator from "../../assets/Indicators/data.json";
