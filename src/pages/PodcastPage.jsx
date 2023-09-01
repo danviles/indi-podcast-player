@@ -33,7 +33,7 @@ const PodcastPage = () => {
 
   return (
     <section className="flex flex-col">
-      {thisQuery.status === "loading" ? (
+      {thisQuery?.status === "loading" ? (
         <Typography component="div" variant="h2" className="flex flex-col">
           <Skeleton />
           <Typography variant="h4" className="flex flex-col">

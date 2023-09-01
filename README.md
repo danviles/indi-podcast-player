@@ -37,9 +37,6 @@ Para el modo producción, siga estos pasos:
 
 Ejecuta `npm run test` para iniciar las pruebas E2E en cypress.
 
-![Tests]()
-
-
 ## Demo
 
 Puedes encontrar una versión en vivo de la aplicación [aquí](https://bejewelled-elf-efb60a.netlify.app/).
