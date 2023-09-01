@@ -27,8 +27,12 @@ const PodcastPage = () => {
   }) || [];
   
   const handleSetEpisode = (episode) => {
-    setActEpisode(episode)
+    const guidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!guidRegex.test(episode.guid)) {
+      episode.guid = 'erridreasigned'+podcastID
+    }
     navigate(`./episode/${episode.guid}`);
+    setActEpisode(episode)
   };
 
   return (
@@ -46,7 +50,7 @@ const PodcastPage = () => {
         <>
           <div className="shadow-lg border rounded-sm mb-5 p-2 bg-white">
             <h1 className="text-xl font-bold capitalize">
-              Episodes: {getEpisodesQuery.data.length}
+              Episodes: {getEpisodesQuery?.data?.length}
             </h1>
           </div>
           {/* Episodes table */}
