@@ -6,7 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useGetEpisodes, usePodcastContext } from "../hooks/usePodcast";
-import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton, Typography } from "@mui/material";
 import { formatDate, formatTime } from "../helpers/formatDates";
 
@@ -16,8 +15,6 @@ const PodcastPage = () => {
   const { actPodcast, setActEpisode } = usePodcastContext();
   const podcastID = actPodcast?.id.attributes["im:id"];
 
-  const queryClient = useQueryClient();
-  const thisQuery = queryClient.getQueryState(["episodes", podcastID]);
   const getEpisodesQuery = useGetEpisodes(podcastID);
 
   const sortedEpisodesByDate = getEpisodesQuery?.data?.sort((a, b) => {
@@ -37,7 +34,7 @@ const PodcastPage = () => {
 
   return (
     <section className="flex flex-col">
-      {thisQuery?.status === "loading" ? (
+      {getEpisodesQuery?.isFetching ? (
         <Typography component="div" variant="h2" className="flex flex-col">
           <Skeleton />
           <Typography variant="h4" className="flex flex-col">
